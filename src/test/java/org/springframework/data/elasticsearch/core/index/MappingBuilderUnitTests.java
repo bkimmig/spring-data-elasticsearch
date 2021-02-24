@@ -506,6 +506,23 @@ public class MappingBuilderUnitTests extends MappingContextBaseTests {
 		assertEquals(expected, mapping, false);
 	}
 
+  @Test // BK
+	@DisplayName("should write dense_vector properties")
+	void shouldWriteDenseVectorProperties() throws JSONException {
+		String expected = "{\n" + //
+				"  \"properties\": {\n" + //
+				"    \"my_vector\": {\n" + //
+				"      \"type\": \"dense_vector\",\n" + //
+        "      \"dims\": 16\n" + //
+				"    }\n" + //
+				"  }\n" + //
+				"}\n"; //
+
+		String mapping = getMappingBuilder().buildPropertyMapping(DenseVectorEntity.class);
+
+		assertEquals(expected, mapping, false);
+	}
+
 	@Test // #1370
 	@DisplayName("should not write mapping when enabled is false on entity")
 	void shouldNotWriteMappingWhenEnabledIsFalseOnEntity() throws JSONException {
@@ -961,6 +978,13 @@ public class MappingBuilderUnitTests extends MappingContextBaseTests {
 		@Field(type = FieldType.Rank_Feature) private Integer pageRank;
 		@Field(type = FieldType.Rank_Feature, positiveScoreImpact = false) private Integer urlLength;
 		@Field(type = FieldType.Rank_Features) private Map<String, Integer> topics;
+	}
+
+  @Data
+	static class DenseVectorEntity {
+
+		@Id private String id;
+		@Field(type = FieldType.Dense_Vector, dims = 16) private float[] my_vector;
 	}
 
 	@Data

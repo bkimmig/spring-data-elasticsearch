@@ -65,6 +65,7 @@ public final class MappingParameters {
 	static final String FIELD_PARAM_NULL_VALUE = "null_value";
 	static final String FIELD_PARAM_POSITION_INCREMENT_GAP = "position_increment_gap";
 	static final String FIELD_PARAM_POSITIVE_SCORE_IMPACT = "positive_score_impact";
+  static final String FIELD_PARAM_DIMS = "dims";
 	static final String FIELD_PARAM_SCALING_FACTOR = "scaling_factor";
 	static final String FIELD_PARAM_SEARCH_ANALYZER = "search_analyzer";
 	static final String FIELD_PARAM_STORE = "store";
@@ -94,6 +95,7 @@ public final class MappingParameters {
 	private final NullValueType nullValueType;
 	private final Integer positionIncrementGap;
 	private final boolean positiveScoreImpact;
+  private final Integer dims;
 	private final String searchAnalyzer;
 	private final double scalingFactor;
 	private final Similarity similarity;
@@ -153,6 +155,7 @@ public final class MappingParameters {
 				|| (maxShingleSize >= 2 && maxShingleSize <= 4), //
 				"maxShingleSize must be in inclusive range from 2 to 4 for field type search_as_you_type");
 		positiveScoreImpact = field.positiveScoreImpact();
+    dims = field.dims();
 		Assert.isTrue(field.enabled() || type == FieldType.Object, "enabled false is only allowed for field type object");
 		enabled = field.enabled();
 		eagerGlobalOrdinals = field.eagerGlobalOrdinals();
@@ -191,6 +194,7 @@ public final class MappingParameters {
 				|| (maxShingleSize >= 2 && maxShingleSize <= 4), //
 				"maxShingleSize must be in inclusive range from 2 to 4 for field type search_as_you_type");
 		positiveScoreImpact = field.positiveScoreImpact();
+    dims = field.dims();
 		enabled = true;
 		eagerGlobalOrdinals = field.eagerGlobalOrdinals();
 	}
@@ -321,6 +325,11 @@ public final class MappingParameters {
 
 		if (!positiveScoreImpact) {
 			builder.field(FIELD_PARAM_POSITIVE_SCORE_IMPACT, positiveScoreImpact);
+		}
+
+    if (dims != null && dims >= 1) {
+			// Assert.isTrue(dims >= 0, "dims must be a positive value");
+			builder.field(FIELD_PARAM_DIMS, dims);
 		}
 
 		if (!enabled) {

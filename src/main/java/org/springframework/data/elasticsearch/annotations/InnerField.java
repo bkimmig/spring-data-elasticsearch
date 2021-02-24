@@ -140,4 +140,11 @@ public @interface InnerField {
 	 * @since 4.1
 	 */
 	NullValueType nullValueType() default NullValueType.String;
+
+  /**
+   * to be used in combination with {@link FieldType#Dense_Vector}
+   *
+	 * @since 4.2
+	 */
+	int dims() default -1;
 }

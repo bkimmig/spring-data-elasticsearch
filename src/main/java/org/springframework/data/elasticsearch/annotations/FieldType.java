@@ -57,5 +57,7 @@ public enum FieldType {
 	/** @since 4.1 */
 	Rank_Features, //
 	/** since 4.2 */
-	Wildcard //
+	Wildcard, //
+  /** @since 4.2 */
+  Dense_Vector //
 }
